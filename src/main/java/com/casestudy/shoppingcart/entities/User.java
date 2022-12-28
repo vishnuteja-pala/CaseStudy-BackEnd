@@ -1,5 +1,6 @@
 package com.casestudy.shoppingcart.entities;
 
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +23,18 @@ public class User implements UserDetails {
     @Column(unique=true ,nullable = false)
     private  String userName;
 
+    @NonNull
     private String email;
+    @NonNull
     private String userPassword;
 
+    @NonNull
     private String street;
+    @NonNull
     private String city;
+    @NonNull
     private String state;
+    @NonNull
     private String pinCode;
 
 

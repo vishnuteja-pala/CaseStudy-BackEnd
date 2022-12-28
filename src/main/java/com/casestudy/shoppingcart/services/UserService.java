@@ -9,7 +9,7 @@ public interface UserService {
 
     //    customer find
 
-    User getUserById(int id);
+    User getUserById(int id,String token);
 
     int updateUserDetails(User user);
     void initRoleAndUser();

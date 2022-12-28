@@ -22,4 +22,6 @@ public interface ProductService {
     List<Product> getProductBySearchString(String searchString);
 
     List<Product> getFilteredProductByCategory(String filteredCategory);
+
+    List<Product> getSortedProductByPrice(Integer minPrice,Integer maxPrice);
 }

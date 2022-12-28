@@ -1,5 +1,6 @@
 package com.casestudy.shoppingcart.services;
 
+import com.casestudy.shoppingcart.Util.JwtUtil;
 import com.casestudy.shoppingcart.entities.Role;
 import com.casestudy.shoppingcart.entities.User;
 import com.casestudy.shoppingcart.repos.RoleRepository;
@@ -14,6 +15,9 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements  UserService {
     @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
     private UserRepository userRepo ;
 
     @Autowired
@@ -24,10 +28,16 @@ public class UserServiceImpl implements  UserService {
 
 
     @Override
-    public User getUserById(int id) {
-
-            User user = userRepo.getUserById(id);
-            return user;
+    public User getUserById(int id,String token) {
+        String[] splitToken = token.split("\\s+");
+        String tokenUserName = jwtUtil.getUsernameFromToken(splitToken[1]);
+//      Optional<User> tokenUser = userRepo.findByUserName(tokenUserName);
+      int tokenUserId = userRepo.findByUserName(tokenUserName).get().getUserId();
+        if(tokenUserId == id) {
+                User user = userRepo.getUserById(id);
+                return user;
+            }
+            return null;
     }
 
     @Override
@@ -35,6 +45,7 @@ public class UserServiceImpl implements  UserService {
         if (userRepo.existsById(user.getUserId())){
            int i = userRepo.updateProfileById(user.getUserName(), user.getUserPassword(), user.getEmail(),user.getStreet(),user.getCity(),user.getState(),user.getPinCode(), user.getUserId());
             user.setUserPassword(getEncodedPassword(user.getUserPassword()));
+            userRepo.save(user);
             return i;
         }
         return 0;

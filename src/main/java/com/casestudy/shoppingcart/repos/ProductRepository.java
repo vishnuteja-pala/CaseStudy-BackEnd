@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -35,5 +36,8 @@ public interface ProductRepository  extends JpaRepository<Product,Integer> {
 
     @Query("select p from Product p where p.productCategory =:c ")
     List<Product> getFilteredProductByCategory(@Param("c") String filteredCategory);
+
+    @Query("select p from Product p where p.productPrice >=?1 and p.productPrice<=?2")
+    List<Product> getSortedProductByPrice( int minPrice, int maxPrice);
 
 }

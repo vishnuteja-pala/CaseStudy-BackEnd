@@ -19,7 +19,6 @@ public class CartController {
     @PreAuthorize("hasAnyRole('Admin','User')")
     @GetMapping("/{userId}/getCart")
     public ResponseEntity<Cart> getCart(@PathVariable("userId") Integer userId){
-        System.out.println("cart");
         return cartService.getCartByUserId(userId);
     }
 
@@ -45,6 +44,7 @@ public class CartController {
     @PreAuthorize("hasAnyRole('Admin','User')")
     @GetMapping("/{userId}/remove/{productId}")
     public ResponseEntity<String> RemoveFromCart(@PathVariable("userId") Integer userId, @PathVariable("productId") Integer productId){
+        System.out.println("item removed");
         return cartService.deleteCartItem(productId,userId);
     }
 

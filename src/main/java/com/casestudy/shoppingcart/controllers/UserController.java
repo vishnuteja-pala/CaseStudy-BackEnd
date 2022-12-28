@@ -33,8 +33,8 @@ public class UserController {
     @SuppressWarnings("SpellCheckingInspection")
     @PreAuthorize("hasAnyRole('Admin','User')")
     @GetMapping("/getprofile/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable("userId") int userId){
-        return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
+    public ResponseEntity<User> getUserById(@PathVariable("userId") int userId,@RequestHeader (name="Authorization") String token){
+        return new ResponseEntity<>(userService.getUserById(userId,token), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('Admin','User')")

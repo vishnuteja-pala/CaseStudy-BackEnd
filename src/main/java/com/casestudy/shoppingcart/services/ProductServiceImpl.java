@@ -103,6 +103,19 @@ public class ProductServiceImpl implements  ProductService {
         }
     }
 
+    @Override
+    public List<Product> getSortedProductByPrice(Integer minPrice, Integer maxPrice) {
+        if(minPrice ==null && maxPrice !=null){
+            minPrice = 0 ;
+        } else if (minPrice!=null && maxPrice ==null) {
+            maxPrice = 2147483;
+        } else if (minPrice==null && maxPrice ==null) {
+            return null;
+        }
+        List<Product> productList = productRepository.getSortedProductByPrice(minPrice,maxPrice);
+        return productList;
+    }
+
 
 }
 

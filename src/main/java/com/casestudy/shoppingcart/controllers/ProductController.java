@@ -1,5 +1,6 @@
 package com.casestudy.shoppingcart.controllers;
 
+import com.casestudy.shoppingcart.DTO.priceFilterDto;
 import com.casestudy.shoppingcart.entities.ImageModel;
 import com.casestudy.shoppingcart.entities.Product;
 import com.casestudy.shoppingcart.services.ProductService;
@@ -87,6 +88,16 @@ public class ProductController {
         return new ResponseEntity<>(productService.getFilteredProductByCategory(filteredCategory),HttpStatus.OK);
     }
 
+
+    @PostMapping("/getSortedProductByPrice")
+    public ResponseEntity<List<Product>>  getSortedProductByPrice(@RequestBody priceFilterDto priceFilter ){
+        List<Product> productList = productService.getSortedProductByPrice(priceFilter.getMinPrice(),priceFilter.getMaxPrice());
+        if(productList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else {
+            return new ResponseEntity<>(productList,HttpStatus.OK);
+        }
+    }
 
 
 
